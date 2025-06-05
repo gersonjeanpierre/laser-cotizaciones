@@ -1,24 +1,37 @@
+import { FormControl } from "@angular/forms";
+
 export interface Customer {
   id: number;
   entity_type: string;
-  ruc?: string; // Optional
-  dni?: string; // Optional
-  name?: string; // Optional
-  last_name?: string; // Optional
-  business_name?: string; // Optional
-  phone_number?: string; // Optional
-  email?: string; // Optional
-  created_at?: string; // FastAPI devuelve ISO 8601 string
-  updated_at?: string; // FastAPI devuelve ISO 8601 string
+  ruc: string; // Optional
+  dni: string | null; // Optional
+  name: string | null; // Optional
+  last_name: string | null; // Optional
+  business_name: string | null; // Optional
+  phone_number: string | null; // Optional
+  email: string | null; // Optional
+  created_at: string | null; // FastAPI devuelve ISO 8601 string
+  updated_at: string | null; // FastAPI devuelve ISO 8601 string
 }
 
 export interface CustomerCreate {
   entity_type: string;
-  ruc?: string;
-  dni?: string;
-  name?: string;
-  last_name?: string;
-  business_name?: string;
-  phone_number?: string;
-  email?: string;
+  ruc: string;
+  dni: string | null;
+  name: string | null;
+  last_name: string | null;
+  business_name: string | null;
+  phone_number: string | null;
+  email: string | null;
 }
+
+export type CustomerFormGroup = {
+  entity_type: FormControl<string>;
+  ruc: FormControl<string | null>;
+  dni: FormControl<string | null>;
+  name: FormControl<string | null>;
+  last_name: FormControl<string | null>;
+  business_name: FormControl<string | null>;
+  phone_number: FormControl<string | null>;
+  email: FormControl<string | null>;
+};

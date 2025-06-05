@@ -17,7 +17,6 @@ export const appConfig: ApplicationConfig = {
     provideZonelessChangeDetection(),
     provideRouter(routes, withComponentInputBinding()),
     provideHttpClient(withFetch()),
-    // Aquí es donde Angular sabe qué implementación usar para el puerto
     { provide: CustomerRepositoryPort, useClass: CustomerApiService },
     providePrimeNG({
       theme: {

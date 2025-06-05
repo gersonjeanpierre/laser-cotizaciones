@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { Customers } from './customers/customers';
+import { CustomerFormComponent } from './ui/components/customer-form/customer-form';
 
 @Component({
   selector: 'app-root',
-  imports: [Customers],
+  imports: [CustomerFormComponent],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

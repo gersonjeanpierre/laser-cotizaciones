@@ -1,0 +1,40 @@
+<div class="p-4">
+  <p-panel>
+    <h2 class="text-2xl font-bold">Customer Form</h2>
+  </p-panel>
+
+  <form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
+    <p-select formControlName="entity_type" [options]="entityType" optionLabel="label"
+      placeholder="Seleccione tipo de persona" class="w-full md:w-56" />
+    <p-floatlabel variant="on">
+      <input pInputText id="on_label" formControlName="ruc" autocomplete="off" />
+      <label for="on_label">RUC</label>
+    </p-floatlabel>
+    <p-floatlabel variant="on">
+      <input pInputText id="on_label" formControlName="ruc" autocomplete="off" />
+      <label for="on_label">DNI</label>
+    </p-floatlabel>
+    <p-floatlabel variant="on">
+      <input pInputText id="on_label" formControlName="ruc" autocomplete="off" />
+      <label for="on_label">Nombres</label>
+    </p-floatlabel>
+    <p-floatlabel variant="on">
+      <input pInputText id="on_label" formControlName="ruc" autocomplete="off" />
+      <label for="on_label">Apellidos</label>
+    </p-floatlabel>
+    <p-floatlabel variant="on">
+      <input pInputText id="on_label" formControlName="ruc" autocomplete="off" />
+      <label for="on_label">Razon Social</label>
+    </p-floatlabel>
+    <p-floatlabel variant="on">
+      <input pInputText id="on_label" formControlName="ruc" autocomplete="off" />
+      <label for="on_label">Celular</label>
+    </p-floatlabel>
+    <p-floatlabel variant="on">
+      <input pInputText id="on_label" formControlName="ruc" autocomplete="off" />
+      <label for="on_label">Email</label>
+    </p-floatlabel>
+    <p-button label="Guardar Cliente" [raised]="true" type="submit" />
+  </form>
+
+</div>
