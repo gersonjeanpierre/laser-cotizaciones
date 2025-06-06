@@ -9,7 +9,7 @@ import { Customer, CustomerCreate } from '@app/domain/models/customer-model';
 })
 export class CustomerApiService implements CustomerRepositoryPort{
 
-  private apiUrl = "https://127.0.0.1:8000/api/v1/customers";
+  private apiUrl = "http://127.0.0.1:8000/api/v1/customers";
 
   constructor( private http: HttpClient ) {}
 

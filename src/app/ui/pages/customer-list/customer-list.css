@@ -1,0 +1,4 @@
+:host ::ng-deep .p-dialog-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}

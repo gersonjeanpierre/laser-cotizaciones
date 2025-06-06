@@ -1,0 +1,56 @@
+<div class="container mx-auto p-4">
+  <h2 class="text-2xl font-bold mb-4">Gestión de Clientes (Arquitectura Hexagonal)</h2>
+
+  <p-button label="Crear Nuevo Cliente" icon="pi pi-plus" (onClick)="openCreateDialog()"
+    styleClass="p-button-success mb-4"></p-button>
+
+  <p-table [value]="(customers$ | async) ?? []" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} clientes"
+    [rowsPerPageOptions]="[10, 25, 50]" [tableStyle]="{'min-width': '50rem'}">
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="id">ID <p-sortIcon field="id"></p-sortIcon></th>
+        <th pSortableColumn="entity_type">Tipo <p-sortIcon field="entity_type"></p-sortIcon></th>
+        <th pSortableColumn="business_name">Razón Social / Nombre <p-sortIcon field="business_name"></p-sortIcon></th>
+        <th pSortableColumn="email">Email <p-sortIcon field="email"></p-sortIcon></th>
+        <th pSortableColumn="phone_number">Teléfono <p-sortIcon field="phone_number"></p-sortIcon></th>
+        <th class="text-center">Acciones</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-customer>
+      <tr>
+        <td>{{ customer.id }}</td>
+        <td>{{ customer.entity_type }}</td>
+        <td>
+          <ng-container *ngIf="customer.entity_type === 'J'; else naturalPerson">
+            {{ customer.business_name }}
+          </ng-container>
+          <ng-template #naturalPerson>
+            {{ customer.name }} {{ customer.last_name }}
+          </ng-template>
+        </td>
+        <td>{{ customer.email }}</td>
+        <td>{{ customer.phone_number }}</td>
+        <td class="text-center">
+          <p-button icon="pi pi-pencil" styleClass="p-button-warning p-button-sm mr-2"
+            (onClick)="openEditDialog(customer)"></p-button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="6" class="text-center">No hay clientes registrados.</td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <p-dialog maskStyleClass="backdrop-blur-sm" [(visible)]="displayDialog" [modal]="true">
+    <ng-template #headless>
+      <h3 class="text-lg font-semibold">{{ isEditMode ? 'Editar Cliente' : 'Crear Cliente' }}</h3>
+      <app-customer-form [customer]="currentCustomer" (save)="handleSaveCustomer($event)" (cancel)="handleCancelForm()">
+      </app-customer-form>
+    </ng-template>
+  </p-dialog>
+
+  <p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
+</div>

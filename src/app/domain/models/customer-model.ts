@@ -15,8 +15,8 @@ export interface Customer {
 }
 
 export interface CustomerCreate {
-  entity_type: string;
-  ruc: string;
+  entity_type: string; // Por defecto, Persona Natural ('N')
+  ruc: string | null; // Optional, solo para Persona Jurídica
   dni: string | null;
   name: string | null;
   last_name: string | null;
@@ -26,7 +26,7 @@ export interface CustomerCreate {
 }
 
 export type CustomerFormGroup = {
-  entity_type: FormControl<string>;
+  entity_type: FormControl<string | null>; // Por defecto, Persona Natural
   ruc: FormControl<string | null>;
   dni: FormControl<string | null>;
   name: FormControl<string | null>;

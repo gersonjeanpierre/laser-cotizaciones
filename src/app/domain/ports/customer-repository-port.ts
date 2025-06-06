@@ -8,5 +8,5 @@ export abstract class CustomerRepositoryPort { // Usamos 'abstract class' para l
   abstract getCustomerById(id: number): Observable<Customer>;
   abstract updateCustomer(id: number, customer: CustomerCreate): Observable<Customer>;
   abstract createCustomer(customer: CustomerCreate): Observable<Customer>;
-  // abstract deleteCustomer(id: number): Observable<void>; // Lo añadiremos después
+  abstract deleteCustomer(id: number): Observable<void>; // Lo añadiremos después
 }
