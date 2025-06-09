@@ -1,0 +1,4 @@
+.p-togglebutton-checked {
+  border-radius: 6px;
+  background-color: var(--color-slate-700);
+} 

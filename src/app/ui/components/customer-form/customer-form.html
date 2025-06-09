@@ -1,11 +1,15 @@
 <div class="mt-2">
   <form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
     <div class="flex flex-col gap-4 ">
+      <div class="card flex justify-center">
+        <p-selectbutton formControlName="clientTypeId" [options]="clientTypeOptions" optionLabel="label"
+          optionValue="value" autofocus="true" />
+      </div>
       <p-panel showHeader="false">
         <div class="grid auto-cols-max grid-flow-col auto-rows-max mt-4 gap-4">
           <p-iftalabel>
-            <p-select formControlName="entity_type" [options]="entityTypeOptions" optionLabel="label"
-              optionValue="value" variant="filled" placeholder="Seleccione" class="w-full md:w-56" />
+            <p-select formControlName="entityType" [options]="entityTypeOptions" optionLabel="label" optionValue="value"
+              variant="filled" placeholder="Seleccione" class="w-full md:w-56" />
             <label for="on_label">Tipo de Persona</label>
           </p-iftalabel>
           <p-iftalabel>
@@ -21,7 +25,7 @@
       <p-panel showHeader="false">
         <div class="grid auto-cols-max grid-flow-col auto-rows-max mt-4 gap-4">
           <p-iftalabel>
-            <input pInputText id="on_label" formControlName="business_name" autocomplete="off" />
+            <input pInputText id="on_label" formControlName="businessName" autocomplete="off" />
             <label for="on_label">Razon Social</label>
           </p-iftalabel>
           <p-iftalabel>
@@ -29,7 +33,7 @@
             <label for="on_label">Nombres</label>
           </p-iftalabel>
           <p-iftalabel>
-            <input pInputText id="on_label" formControlName="last_name" autocomplete="off" />
+            <input pInputText id="on_label" formControlName="lastName" autocomplete="off" />
             <label for="on_label">Apellidos</label>
           </p-iftalabel>
         </div>
@@ -37,7 +41,7 @@
       <p-panel showHeader="false">
         <div class="grid auto-cols-max grid-flow-col auto-rows-max mt-4 gap-4">
           <p-iftalabel>
-            <input pInputText id="on_label" formControlName="phone_number" autocomplete="off" />
+            <input pInputText id="on_label" formControlName="phoneNumber" autocomplete="off" />
             <label for="on_label">Celular</label>
           </p-iftalabel>
           <p-iftalabel>

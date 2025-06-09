@@ -7,8 +7,8 @@ export interface Product{
   unityMeasure: string; // metro lineal, metro cuadrado, item, etc.
   baseCost: number;
   imageUrl: string | null; // URL de la imagen del producto  
-  created_at: string | null;
-  updated_at: string | null; 
+  createdAt: string | null;
+  updatedAt: string | null; 
 }
 
 export interface ProductCreate {
@@ -30,6 +30,6 @@ export interface ProductExtraOption {
   productoId: string;
   description: string;
   baseCost: number;
-  created_at: string | null;
-  updated_at: string | null;
+  createdAt: string | null;
+  updatedAt: string | null;
 }

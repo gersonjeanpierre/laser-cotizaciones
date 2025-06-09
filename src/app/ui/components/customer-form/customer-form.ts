@@ -8,15 +8,15 @@ import { DialogModule } from 'primeng/dialog'; // Para usarlo como contenido de 
 import { InputTextModule } from 'primeng/inputtext';
 import { SelectModule } from 'primeng/select';
 import { PanelModule } from 'primeng/panel';
-import { FloatLabel } from 'primeng/floatlabel';
 import { IftaLabelModule } from 'primeng/iftalabel';
+import { SelectButton } from 'primeng/selectbutton';
 
 // Modelos del dominio
 import { Customer, CustomerCreate, CustomerFormGroup } from '@app/domain/models/customer-model';
 
-interface EntityType {
+interface TypeOptions {
   label: string;
-  value: string;
+  value: string | number;
 }
 
 @Component({
@@ -29,8 +29,8 @@ interface EntityType {
     SelectModule,
     PanelModule,
     ReactiveFormsModule,
-    // FloatLabel,
-    IftaLabelModule
+    IftaLabelModule,
+    SelectButton
   ],
   templateUrl: './customer-form.html',
   styleUrl: './customer-form.css',
@@ -39,19 +39,23 @@ interface EntityType {
 
 export class CustomerFormComponent implements OnInit, OnChanges {
 
+
   private formBuilder = inject(FormBuilder);
   customerForm = this.formBuilder.group<CustomerFormGroup>({
-    entity_type: this.formBuilder.control<string>('N', Validators.required), // Por defecto, Persona Natural
+    clientTypeId: this.formBuilder.control<number>(1, Validators.required),
+    entityType: this.formBuilder.control<string>('N', Validators.required), 
     ruc: this.formBuilder.control<string>(''),
     dni: this.formBuilder.control<string | null>(null),
     name: this.formBuilder.control<string | null>(null),
-    last_name: this.formBuilder.control<string | null>(null),
-    business_name: this.formBuilder.control<string | null>(null),
-    phone_number: this.formBuilder.control<string | null>(null),
+    lastName: this.formBuilder.control<string | null>(null),
+    businessName: this.formBuilder.control<string | null>(null),
+    phoneNumber: this.formBuilder.control<string | null>(null),
     email: this.formBuilder.control<string | null>(null)
   });
 
-  entityTypeOptions: EntityType[] = [];
+  entityTypeOptions: TypeOptions[] = [];
+  clientTypeOptions: TypeOptions[] = [];
+  
   @Input() customer: CustomerCreate | undefined;
   @Output() save = new EventEmitter<CustomerCreate>(); // Emite el cliente a guardar
   @Output() cancel = new EventEmitter<void>(); // Emite cuando se cancela
@@ -60,7 +64,7 @@ export class CustomerFormComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['customer'] && changes['customer'].currentValue) {
       this.customerForm.patchValue(changes['customer'].currentValue);
-      this.toggleRequiredFields(changes['customer'].currentValue.entity_type);
+      this.toggleRequiredFields(changes['customer'].currentValue.entityType);
     } else if (changes['customer'] && !changes['customer'].currentValue) {
       // Si el input customer se limpia (ej. para nuevo cliente), resetear el formulario
       this.customerForm.reset();
@@ -71,9 +75,9 @@ export class CustomerFormComponent implements OnInit, OnChanges {
   // Método para manejar la visibilidad y validación de campos según el tipo de entidad
   private toggleRequiredFields(entityType: string | null | undefined): void {
     const nameControl = this.customerForm.get('name');
-    const lastNameControl = this.customerForm.get('last_name');
+    const lastNameControl = this.customerForm.get('lastName');
     const dniControl = this.customerForm.get('dni');
-    const businessNameControl = this.customerForm.get('business_name');
+    const businessNameControl = this.customerForm.get('businessName');
     const rucControl = this.customerForm.get('ruc');
 
     if (entityType === 'N') { // Persona Natural
@@ -108,49 +112,61 @@ export class CustomerFormComponent implements OnInit, OnChanges {
       { label: 'Persona Natural', value: 'N' },
       { label: 'Persona Jurídica', value: 'J' }
     ]
+    this.clientTypeOptions = [
+    { label: 'Final Nuevo', value: 1 },
+    { label: 'Final Frecuente', value: 2 },
+    { label: 'Imprentero Nuevo', value: 3 },
+    { label: 'Imprentero Frecuente', value: 4 }
+    ];
+    
     
     // Suscribirse a cambios en entity_type para ajustar validaciones y visibilidad
-    this.customerForm.get('entity_type')?.valueChanges.subscribe(type => {
+    this.customerForm.get('entityType')?.valueChanges.subscribe(type => {
       this.toggleRequiredFields(type);
     });
 
     // Inicializar el formulario si ya hay un cliente (para edición)
     if (this.customer) {
       this.customerForm.patchValue(this.customer);
-      this.toggleRequiredFields(this.customer.entity_type); // Ajustar campos al cargar
+      this.toggleRequiredFields(this.customer.entityType); // Ajustar campos al cargar
     }
   }
 
  
   onSubmit() {
+    console.log('Formulario enviado:', this.customerForm.value);
+    console.log('Client type:', this.customerForm.value.clientTypeId);
     if (this.customerForm.valid) {
       // Filtrar los campos que deben ser null si no son relevantes para el tipo de entidad
       const formValue = this.customerForm.value;
       
       let customerToEmit: CustomerCreate = {
-        entity_type: formValue.entity_type || '', // entity_type siempre debería tener un valor
+        clientTypeId: formValue.clientTypeId || 1, 
+        entityType: formValue.entityType || '', // entity_type siempre debería tener un valor
         email: formValue.email || null,
-        phone_number: formValue.phone_number || null,
+        phoneNumber: formValue.phoneNumber || null,
         ruc: null,
         dni: null,
         name: null,
-        last_name: null,
-        business_name: null
+        lastName: null,
+        businessName: null
       };
 
-      if (formValue.entity_type === 'N') {
+      if (formValue.entityType === 'N') {
+        customerToEmit.clientTypeId = formValue.clientTypeId || 1;
         customerToEmit.name = formValue.name || null;
-        customerToEmit.last_name = formValue.last_name || null;
+        customerToEmit.lastName = formValue.lastName || null;
         customerToEmit.dni = formValue.dni || null;
         // Asegurarse de que los campos de persona jurídica sean null
-        customerToEmit.business_name = null;
+        customerToEmit.businessName = null;
         customerToEmit.ruc = null;
-      } else if (formValue.entity_type === 'J') {
-        customerToEmit.business_name = formValue.business_name || null;
+      } else if (formValue.entityType === 'J') {
+        customerToEmit.clientTypeId = formValue.clientTypeId || 1;
+        customerToEmit.businessName = formValue.businessName || null;
         customerToEmit.ruc = formValue.ruc || null;
         // Asegurarse de que los campos de persona natural sean null
         customerToEmit.name = null;
-        customerToEmit.last_name = null;
+        customerToEmit.lastName = null;
         customerToEmit.dni = null;
       }
 

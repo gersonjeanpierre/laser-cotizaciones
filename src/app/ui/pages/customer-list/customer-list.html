@@ -10,27 +10,27 @@
     <ng-template pTemplate="header">
       <tr>
         <th pSortableColumn="id">ID <p-sortIcon field="id"></p-sortIcon></th>
-        <th pSortableColumn="entity_type">Tipo <p-sortIcon field="entity_type"></p-sortIcon></th>
-        <th pSortableColumn="business_name">Razón Social / Nombre <p-sortIcon field="business_name"></p-sortIcon></th>
+        <th pSortableColumn="entityType">Tipo <p-sortIcon field="entityType"></p-sortIcon></th>
+        <th pSortableColumn="businessName">Razón Social / Nombre <p-sortIcon field="businessName"></p-sortIcon></th>
         <th pSortableColumn="email">Email <p-sortIcon field="email"></p-sortIcon></th>
-        <th pSortableColumn="phone_number">Teléfono <p-sortIcon field="phone_number"></p-sortIcon></th>
+        <th pSortableColumn="phoneNumber">Teléfono <p-sortIcon field="phoneNumber"></p-sortIcon></th>
         <th class="text-center">Acciones</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-customer>
       <tr>
         <td>{{ customer.id }}</td>
-        <td>{{ customer.entity_type }}</td>
+        <td>{{ customer.entityType }}</td>
         <td>
-          <ng-container *ngIf="customer.entity_type === 'J'; else naturalPerson">
-            {{ customer.business_name }}
+          <ng-container *ngIf="customer.entityType === 'J'; else naturalPerson">
+            {{ customer.businessName }}
           </ng-container>
           <ng-template #naturalPerson>
-            {{ customer.name }} {{ customer.last_name }}
+            {{ customer.name }} {{ customer.lastName }}
           </ng-template>
         </td>
         <td>{{ customer.email }}</td>
-        <td>{{ customer.phone_number }}</td>
+        <td>{{ customer.phoneNumber }}</td>
         <td class="text-center">
           <p-button icon="pi pi-pencil" styleClass="p-button-warning p-button-sm mr-2"
             (onClick)="openEditDialog(customer)"></p-button>

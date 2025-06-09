@@ -42,19 +42,19 @@ import { Observable,of } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CustomerListPageComponent implements OnInit {
-  customers$: Observable<Customer[]> = of([]); // Cambiado a Observable para manejar la suscripción
-  customers: Customer[] = [];
+  customers$: Observable<Customer[]> = of([]);
   displayDialog: boolean = false;
   isEditMode: boolean = false;
   currentCustomer: CustomerCreate & { id?: number } = {
-    entity_type: '',
+    clientTypeId: 1,
+    entityType: '',
     ruc: '',
     dni: '',
     name: '',
-    last_name: '',
+    lastName: '',
     email: '',
-    phone_number: '',
-    business_name: '',
+    phoneNumber: '',
+    businessName: '',
   };
 
   constructor(
@@ -76,14 +76,15 @@ export class CustomerListPageComponent implements OnInit {
   openCreateDialog(): void {
     this.isEditMode = false;
     this.currentCustomer = {
-      entity_type: '',
+      clientTypeId: 1, // Asignar valores por defecto
+      entityType: '',
       ruc: '',
       dni: '',
       name: '',
-      last_name: '',
+      lastName: '',
       email: '',
-      phone_number: '',
-      business_name: '',
+      phoneNumber: '',
+      businessName: '',
     }; // Objeto vacío para crear
     this.displayDialog = true;
   }
@@ -95,8 +96,19 @@ export class CustomerListPageComponent implements OnInit {
       this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'ID de cliente no disponible para edición.' });
       return;
     }
-    // Copia el cliente para edición. Asegura que tenga el ID.
-    this.currentCustomer = { ...customer, id: customer.id }; 
+    // Copia el cliente para edición. Asegura que tenga el ID y mapea last_name a lastName.
+    this.currentCustomer = { 
+      id: customer.id,
+      clientTypeId: customer.clientTypeId,
+      entityType: customer.entityType,
+      ruc: customer.ruc,
+      dni: customer.dni,
+      name: customer.name,
+      lastName: customer.lastName,
+      businessName: customer.businessName,
+      phoneNumber: customer.phoneNumber,
+      email: customer.email,
+    }; 
     this.displayDialog = true;
   }
 
