@@ -29,7 +29,7 @@ interface EntityType {
     SelectModule,
     PanelModule,
     ReactiveFormsModule,
-    FloatLabel,
+    // FloatLabel,
     IftaLabelModule
   ],
   templateUrl: './customer-form.html',
