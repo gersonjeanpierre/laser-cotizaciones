@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { CustomerFormComponent } from './ui/components/customer-form/customer-form';
 import { CustomerListPageComponent } from './ui/pages/customer-list/customer-list';
+import { ProductSelectionComponent } from './ui/components/product-selection/product-selection';
 
 @Component({
   selector: 'app-root',
-  imports: [CustomerListPageComponent],
+  imports: [CustomerListPageComponent, ProductSelectionComponent],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

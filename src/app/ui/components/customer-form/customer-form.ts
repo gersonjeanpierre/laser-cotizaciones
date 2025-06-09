@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output, OnInit, inject, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
+import { TypeOptions } from '@app/utils/interfaces/cotiza';
 
 // PrimeNG
 import { ButtonModule } from 'primeng/button';
@@ -14,10 +15,7 @@ import { SelectButton } from 'primeng/selectbutton';
 // Modelos del dominio
 import { Customer, CustomerCreate, CustomerFormGroup } from '@app/domain/models/customer-model';
 
-interface TypeOptions {
-  label: string;
-  value: string | number;
-}
+
 
 @Component({
   selector: 'app-customer-form',
